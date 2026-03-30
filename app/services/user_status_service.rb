@@ -9,7 +9,7 @@ class UserStatusService
 
     return nil unless user_data
 
-    # This could be improbed by tring to find the user status by user_id and updating it instead of creating a new one each time
+    # This could be improbed by tring to find the user status by a unique param and updating it instead of creating a new one each time
     UserStatus.create!(
       full_name: user_data[:full_name],
       experience: user_data[:experience],
