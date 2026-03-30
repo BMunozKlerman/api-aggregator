@@ -1,24 +1,49 @@
-# README
+# API Aggregator
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Prerequisites
+* Ruby version: 3.4.8
+* Rails version: 7.2.2.2
+* Postgres version: 16 or higher
 
-Things you may want to cover:
+## Getting Started
 
-* Ruby version
+### 1. Clone the repository
+```bash
+git clone git@github.com:BMunozKlerman/api-aggregator.git
+cd api-aggregator
+```
+### Install dependencies
+```bash
+bundle install
+```
+### Set up the database
+```bash
+bin/rails db:prepare
+```
+### Enviroments variables
+Create a `.env` file in the root of the project and add the following variables:
+```bash
+API_URL="https://dummyjson.com"
+```
+### Run the server
+```bash
+bin/rails server
+```
+The API will be reachable at http://localhost:3000.
 
-* System dependencies
+## Runing Tests
+We use RSpec for our test suite, covering Models, Services, and Request specs.
+To run the tests, execute the following commands:
+```bash
+# Prepare the test database
+RAILS_ENV=test bin/rails db:test:prepare
 
-* Configuration
+# Run all tests
+bundle exec rspec
+```
 
-* Database creation
+### API Endpoints
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| GET | `/user_status/:id` |Returns aggregated data (Full Name, Experience, Pending Tasks Count, Next Urgent Task).|
