@@ -60,6 +60,7 @@ jobs:
       RAILS_ENV: test
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/api_aggregator_test
       DUMMY_API: https://dummyjson.com
+      API_KEY: "test_token_123"
     steps:
       - name: Install packages
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libvips postgresql-client
