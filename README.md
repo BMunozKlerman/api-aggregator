@@ -23,7 +23,7 @@ bin/rails db:prepare
 ### Enviroments variables
 Create a `.env` file in the root of the project and add the following variables:
 ```bash
-API_URL="https://dummyjson.com"
+DUMMY_API="https://dummyjson.com"
 ```
 ### Run the server
 ```bash
