@@ -15,7 +15,7 @@ RSpec.describe DummyJsonApiService, type: :service do
       expect(response).to be_nil
     end
   end
-  
+
   describe '.get_user_todos' do
     it 'fetches user todos successfully' do
       user_id = 1

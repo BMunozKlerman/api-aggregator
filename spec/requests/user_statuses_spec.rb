@@ -16,5 +16,4 @@ RSpec.describe "UserStatuses", type: :request do
       expect(data).to have_key('next_urgent_task')
     end
   end
-
 end
