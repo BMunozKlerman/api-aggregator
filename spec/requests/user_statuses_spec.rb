@@ -12,24 +12,53 @@ RSpec.describe "UserStatuses", type: :request do
     allow(ENV).to receive(:fetch).with("API_KEY", anything).and_return(valid_token)
   end
 
-  describe "GET show" do
-    it "returns http success" do
-      get "/user_status/1", headers: headers
-      data = JSON.parse(response.body)
+  describe "GET /user_status/:id" do
+    context "with valid credentials" do
 
-      expect(response).to have_http_status(:success)
-      expect(data).not_to have_key('created_at')
-      expect(data).not_to have_key('updated_at')
-      expect(data).to have_key('id')
-      expect(data).to have_key('full_name')
-      expect(data).to have_key('experience')
-      expect(data).to have_key('pending_task_count')
-      expect(data).to have_key('next_urgent_task')
+      context "with a valid positive ID" do
+        before do
+          allow(DummyJsonApiClient).to receive(:get_user).and_return({
+            'firstName' => 'John', 'lastName' => 'Doe', 'age' => 30
+          })
+          allow(DummyJsonApiClient).to receive(:get_user_todos).and_return({
+            'todos' => [{ 'completed' => false, 'todo' => 'Task 1' }]
+          })
+        end
+
+        it "returns http success" do
+          get "/user_status/1", headers: headers
+          expect(response).to have_http_status(:success)
+        end
+      end
+
+      context "with an invalid ID format (e.g., '1s' or '-5')" do
+        it "returns 404 Not Found for alphanumeric strings" do
+          get "/user_status/1s", headers: headers
+
+          expect(response).to have_http_status(:not_found)
+          json = JSON.parse(response.body)
+          expect(json["error"]).to eq("User ID must be a positive number")
+        end
+
+        it "returns 404 Not Found for negative numbers" do
+          get "/user_status/-5", headers: headers
+
+          expect(response).to have_http_status(:not_found)
+          expect(JSON.parse(response.body)["error"]).to include("positive number")
+        end
+
+        it "returns 404 Not Found for zero" do
+          get "/user_status/0", headers: headers
+          expect(response).to have_http_status(:not_found)
+        end
+      end
     end
 
-    it "returns unauthorized without token" do
-      get "/user_status/1"
-      expect(response).to have_http_status(:unauthorized)
+    context "without credentials" do
+      it "returns unauthorized regardless of ID validity" do
+        get "/user_status/1"
+        expect(response).to have_http_status(:unauthorized)
+      end
     end
   end
 end

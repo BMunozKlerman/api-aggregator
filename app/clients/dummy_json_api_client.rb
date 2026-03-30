@@ -9,8 +9,8 @@ class DummyJsonApiClient
     if response.success?
       response.parsed_response
     else
-      Rails.logger.error("Failed to fetch user data: #{response.code} - #{response.message}")
-      nil
+      Rails.logger.error("Failed to fetch user data: user #{response.message}")
+      raise StandardError, "Failed to fetch user data: user #{response.message}"
     end
   end
 
@@ -21,8 +21,8 @@ class DummyJsonApiClient
     if response.success?
       response.parsed_response
     else
-      Rails.logger.error("Failed to fetch user todos: #{response.code} - #{response.message}")
-      nil
+      Rails.logger.error("Failed to fetch user todos: user todos #{response.message}")
+      raise StandardError, "Failed to fetch user todos: user todos #{response.message}"
     end
   end
 end

@@ -9,7 +9,7 @@ class FetchUserDataService
     # Executes the service to fetch and parse user data
     def call
       raise ArgumentError, "User ID is required" unless @user_id.present?
-      raise ArgumentError, "User ID must be a positive number" unless @user_id.to_i > 0
+      raise ArgumentError, "User ID must be a positive number" unless !!(@user_id =~ /\A\d+\z/) && @user_id.to_i > 0
 
       user_data = DummyJsonApiClient.get_user(@user_id)
       user_todos = DummyJsonApiClient.get_user_todos(@user_id)
@@ -19,7 +19,7 @@ class FetchUserDataService
       nil
     rescue StandardError => e
       Rails.logger.error("Error fetching user data: #{e.message}")
-      nil
+      { error: e.message }
     end
 
     private
@@ -36,6 +36,6 @@ class FetchUserDataService
       }
     rescue StandardError => e
       Rails.logger.error("Error parsing user data: #{e.message}, user_data: #{user_data}, user_todos: #{user_todos}")
-      nil
+      Raise "Error parsing user data: #{e.message}"
     end
 end

@@ -11,7 +11,11 @@ class UserStatusService
     fetch_service = FetchUserDataService.new(@user_id)
     user_data = fetch_service.call
 
-    return nil unless user_data
+
+    if user_data.is_a?(Hash) && user_data[:error].present?
+      Rails.logger.error("Error fetching user data for user_id #{@user_id}: #{user_data[:error]}")
+      return user_data
+    end
 
     # This could be improbed by tring to find the user status by a unique param and updating it instead of creating a new one each time
     UserStatus.create!(
@@ -22,6 +26,9 @@ class UserStatusService
     )
   rescue ActiveRecord::RecordInvalid => e
     Rails.logger.error("Error saving user status: #{e.message}, user_data: #{user_data}")
-    nil
+    { error: "Error saving user status: #{e.message}" }
+  rescue StandardError => e
+    Rails.logger.error("Error in UserStatusService: #{e.message}")
+    { error: "Error in UserStatusService: #{e.message}" }
   end
 end
