@@ -25,7 +25,7 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 
 gem "httparty", "~> 0.18.1"
-gem "csv", "~> 3.1"
+gem "csv", "~> 3.3"
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
