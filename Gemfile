@@ -45,7 +45,7 @@ group :development, :test do
   gem "dotenv-rails", require: "dotenv/load"
 
   # RSpec
-  gem "rspec-rails", "~> 7.0.0"
+  gem "rspec-rails", "~> 8.0.4"
   gem "factory_bot_rails"
   gem "shoulda-matchers", "~> 6.0"
   gem "faker"
