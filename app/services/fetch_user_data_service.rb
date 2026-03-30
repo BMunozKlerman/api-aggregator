@@ -28,7 +28,6 @@ class FetchUserDataService
     # @param user_data [Hash] The raw user data from the API
     # @param user_todos [Hash] The raw user's todos data from the API
     def parse_user_data(user_data, user_todos)
-      Rails.logger.debug("user_data: #{user_data}, user_todos: #{user_todos}")
       {
         full_name: "#{user_data["firstName"]} #{user_data["lastName"]}",
         experience: user_data["age"].to_i > 50 ? "Veteran" : "Rookie",
