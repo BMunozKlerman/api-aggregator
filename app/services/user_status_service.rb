@@ -1,8 +1,12 @@
+# This service is responsible for fetching the user status by calling the FetchUserDataService and saving the result to the database.
 class UserStatusService
+  # Initializes the service with the given user ID
+  # @param user_id [Integer] The ID of the user to fetch data for
   def initialize(user_id)
-  @user_id = user_id
+    @user_id = user_id
   end
 
+  # Fetches the user status by calling the FetchUserDataService and saving the result to the database
   def get_user
     fetch_service = FetchUserDataService.new(@user_id)
     user_data = fetch_service.call

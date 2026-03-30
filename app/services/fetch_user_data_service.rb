@@ -1,8 +1,12 @@
+# This service is responsible for fetching and parsing user data from the Dummy JSON API.
 class FetchUserDataService
+    # Initializes the service with the given user ID
+    # @param user_id [Integer] The ID of the user to fetch data for
     def initialize(user_id)
       @user_id = user_id
     end
 
+    # Executes the service to fetch and parse user data
     def call
       raise ArgumentError, "User ID is required" unless @user_id.present?
       raise ArgumentError, "User ID must be a positive number" unless @user_id.to_i > 0
@@ -18,6 +22,11 @@ class FetchUserDataService
       nil
     end
 
+    private
+
+    # Parses the user data and todos to create a structured response
+    # @param user_data [Hash] The raw user data from the API
+    # @param user_todos [Hash] The raw user's todos data from the API
     def parse_user_data(user_data, user_todos)
       Rails.logger.debug("user_data: #{user_data}, user_todos: #{user_todos}")
       {
