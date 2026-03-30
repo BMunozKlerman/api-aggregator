@@ -11,8 +11,8 @@ class FetchUserDataService
       raise ArgumentError, "User ID is required" unless @user_id.present?
       raise ArgumentError, "User ID must be a positive number" unless @user_id.to_i > 0
 
-      user_data = DummyJsonApiService.get_user(@user_id)
-      user_todos = DummyJsonApiService.get_user_todos(@user_id)
+      user_data = DummyJsonApiClient.get_user(@user_id)
+      user_todos = DummyJsonApiClient.get_user_todos(@user_id)
 
       return parse_user_data(user_data, user_todos) if user_data && user_todos
 

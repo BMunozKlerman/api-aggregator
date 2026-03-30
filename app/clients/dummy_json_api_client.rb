@@ -1,5 +1,5 @@
-# This service is responsible for interacting with the Dummy JSON API.
-class DummyJsonApiService
+# This client is responsible for interacting with the Dummy JSON API.
+class DummyJsonApiClient
   API_URL = ENV["DUMMY_API"]
 
   # Fetches user data from the Dummy JSON API
